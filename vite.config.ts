@@ -13,10 +13,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base: '/',
+  base: './',
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
+    minify: 'terser',
     rollupOptions: {
       output: {
         manualChunks: {
