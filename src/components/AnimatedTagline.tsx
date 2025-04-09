@@ -1,9 +1,9 @@
 // src/components/AnimatedTagline.tsx
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 
 export const AnimatedTagline = () => {
-    const [tagline, setTagline] = useState('');
-    const [index, setIndex] = useState(0);
+    const [tagline, setTagline] = React.useState('');
+    const [index, setIndex] = React.useState(0);
     const phrases = [
         'Connecting Students with Opportunities',
         'Find Your Perfect Internship',
@@ -13,10 +13,11 @@ export const AnimatedTagline = () => {
     const typingSpeed = 50;
     const pauseDuration = 1500;
 
-    useEffect(() => {
+    React.useEffect(() => {
         let currentPhrase = phrases[index];
         let i = 0;
         let isTyping = true;
+        let timeoutId: number;
 
         const type = () => {
             if (isTyping) {
@@ -24,9 +25,9 @@ export const AnimatedTagline = () => {
                 i++;
                 if (i > currentPhrase.length) {
                     isTyping = false;
-                    setTimeout(erase, pauseDuration);
+                    timeoutId = window.setTimeout(erase, pauseDuration);
                 } else {
-                    setTimeout(type, typingSpeed);
+                    timeoutId = window.setTimeout(type, typingSpeed);
                 }
             }
         };
@@ -37,15 +38,19 @@ export const AnimatedTagline = () => {
             if (i < 0) {
                 isTyping = true;
                 setIndex((prevIndex) => (prevIndex + 1) % phrases.length);
-                setTimeout(type, typingSpeed);
+                timeoutId = window.setTimeout(type, typingSpeed);
             } else {
-                setTimeout(erase, typingSpeed / 2);
+                timeoutId = window.setTimeout(erase, typingSpeed / 2);
             }
         };
 
-        setTimeout(type, typingSpeed);
+        timeoutId = window.setTimeout(type, typingSpeed);
 
-        return () => clearTimeout(type);
+        return () => {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
+        };
     }, [index, phrases]);
 
     return (
