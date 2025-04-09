@@ -10,7 +10,7 @@ interface InternshipMatchingPlatformProps {
     applications: Application[];
     onApply: (internshipId: string) => void;
     isAuthenticated: boolean;
-    onLogin: () => void;
+    onLogin: (email: string) => void;
 }
 
 export const InternshipMatchingPlatform: React.FC<InternshipMatchingPlatformProps> = ({
@@ -31,6 +31,11 @@ export const InternshipMatchingPlatform: React.FC<InternshipMatchingPlatformProp
         onApply(internshipId);
     };
 
+    const handleLogin = (email: string) => {
+        onLogin(email);
+        setShowLoginModal(false);
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
             <HomePage
@@ -48,7 +53,7 @@ export const InternshipMatchingPlatform: React.FC<InternshipMatchingPlatformProp
             {showLoginModal && (
                 <LoginModal
                     onClose={() => setShowLoginModal(false)}
-                    onLogin={onLogin}
+                    onLogin={handleLogin}
                 />
             )}
         </div>
