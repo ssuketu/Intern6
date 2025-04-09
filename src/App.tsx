@@ -9,9 +9,8 @@ import { Internship, Student, Application } from './types'
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false)
   const [userRole, setUserRole] = React.useState<'student' | 'employer' | null>(null)
-
-  // Mock data for demonstration
-  const mockInternships: Internship[] = [
+  const [currentUser, setCurrentUser] = React.useState<Student | null>(null)
+  const [internships, setInternships] = React.useState<Internship[]>([
     {
       id: '1',
       employerId: 'emp1',
@@ -24,49 +23,59 @@ const App: React.FC = () => {
       deadline: '2024-06-01',
       status: 'open'
     }
-  ]
+  ])
+  const [applications, setApplications] = React.useState<Application[]>([])
 
-  const mockStudents: Student[] = [
-    {
-      id: '1',
-      userId: 'user1',
-      name: 'John Doe',
-      major: 'Computer Science',
-      skills: ['JavaScript', 'React', 'TypeScript'],
-      education: 'Bachelor of Science',
-      resume: 'resume.pdf'
+  const handleApply = (internshipId: string) => {
+    if (!isAuthenticated || !currentUser) {
+      return
     }
-  ]
 
-  const mockApplications: Application[] = [
-    {
-      id: '1',
-      studentId: '1',
-      internshipId: '1',
+    const newApplication: Application = {
+      id: Date.now().toString(),
+      studentId: currentUser.id,
+      internshipId,
       status: 'pending',
       appliedAt: new Date().toISOString()
     }
-  ]
 
-  const handleApply = (internshipId: string) => {
-    if (!isAuthenticated) {
-      // Show login modal
-      return
-    }
-    // Add your application logic here
-    console.log('Applying for internship:', internshipId)
+    setApplications(prev => [...prev, newApplication])
   }
 
   const handleLogin = (email: string) => {
-    // In a real app, you would validate the email and determine the role
     const role = email.includes('@company.com') ? 'employer' : 'student'
     setIsAuthenticated(true)
     setUserRole(role)
+
+    if (role === 'student') {
+      setCurrentUser({
+        id: '1',
+        userId: 'user1',
+        name: 'John Doe',
+        major: 'Computer Science',
+        skills: ['JavaScript', 'React', 'TypeScript'],
+        education: 'Bachelor of Science',
+        resume: 'resume.pdf'
+      })
+    }
   }
 
   const handleLogout = () => {
     setIsAuthenticated(false)
     setUserRole(null)
+    setCurrentUser(null)
+  }
+
+  const handleUpdateInternship = (id: string, updates: Partial<Internship>) => {
+    setInternships(prev => 
+      prev.map(internship => 
+        internship.id === id ? { ...internship, ...updates } : internship
+      )
+    )
+  }
+
+  const handleDeleteInternship = (id: string) => {
+    setInternships(prev => prev.filter(internship => internship.id !== id))
   }
 
   return (
@@ -75,9 +84,9 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={
             <InternshipMatchingPlatform
-              internships={mockInternships}
-              students={mockStudents}
-              applications={mockApplications}
+              internships={internships}
+              students={currentUser ? [currentUser] : []}
+              applications={applications}
               onApply={handleApply}
               isAuthenticated={isAuthenticated}
               onLogin={handleLogin}
@@ -86,9 +95,9 @@ const App: React.FC = () => {
           <Route path="/manage" element={
             isAuthenticated && userRole === 'employer' ? (
               <InternshipManagement
-                internships={mockInternships}
-                onUpdate={(id: string, updates: Partial<Internship>) => console.log('Update internship:', id, updates)}
-                onDelete={(id: string) => console.log('Delete internship:', id)}
+                internships={internships}
+                onUpdate={handleUpdateInternship}
+                onDelete={handleDeleteInternship}
               />
             ) : (
               <Navigate to="/" replace />
