@@ -39,6 +39,19 @@
         <div class="container">
             <div class="form-container">
                 <h2>Create Your Account</h2>
+                <p class="form-description">Join thousands of students and employers on EmployeIntern</p>
+                
+                <div class="account-type-selector">
+                    <div class="account-type active" data-type="student">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Student</span>
+                    </div>
+                    <div class="account-type" data-type="employer">
+                        <i class="fas fa-building"></i>
+                        <span>Employer</span>
+                    </div>
+                </div>
+                
                 <form id="signup-form">
                     <div class="form-group">
                         <label for="fullname">Full Name</label>
@@ -51,12 +64,55 @@
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" required>
+                        <small>Password must be at least 8 characters long and include a number and a special character.</small>
                     </div>
                     <div class="form-group">
                         <label for="confirm-password">Confirm Password</label>
                         <input type="password" id="confirm-password" name="confirm-password" required>
                     </div>
-                    <div class="form-group">
+                    
+                    <!-- Student-specific fields (shown by default) -->
+                    <div class="student-fields">
+                        <div class="form-group">
+                            <label for="university">University/College</label>
+                            <input type="text" id="university" name="university">
+                        </div>
+                        <div class="form-group">
+                            <label for="graduation-year">Expected Graduation Year</label>
+                            <select id="graduation-year" name="graduation-year">
+                                <option value="">Select Year</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Employer-specific fields (hidden by default) -->
+                    <div class="employer-fields" style="display: none;">
+                        <div class="form-group">
+                            <label for="company-name">Company Name</label>
+                            <input type="text" id="company-name" name="company-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="industry">Industry</label>
+                            <select id="industry" name="industry">
+                                <option value="">Select Industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="design">Design</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group terms">
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms">I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a></label>
                     </div>
@@ -118,21 +174,53 @@
 
     <script src="script.js"></script>
     <script>
+        // Account type selector
+        const accountTypes = document.querySelectorAll('.account-type');
+        const studentFields = document.querySelector('.student-fields');
+        const employerFields = document.querySelector('.employer-fields');
+        
+        accountTypes.forEach(type => {
+            type.addEventListener('click', function() {
+                // Remove active class from all types
+                accountTypes.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked type
+                this.classList.add('active');
+                
+                // Show/hide appropriate fields
+                if (this.dataset.type === 'student') {
+                    studentFields.style.display = 'block';
+                    employerFields.style.display = 'none';
+                } else {
+                    studentFields.style.display = 'none';
+                    employerFields.style.display = 'block';
+                }
+            });
+        });
+        
         document.getElementById('signup-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const fullname = document.getElementById('fullname').value;
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
+            const accountType = document.querySelector('.account-type.active').dataset.type;
             
             if (password !== confirmPassword) {
                 alert('Passwords do not match!');
                 return;
             }
             
+            // Check password strength
+            const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                alert('Password must be at least 8 characters long and include a number and a special character.');
+                return;
+            }
+            
             // In a real application, you would send this data to a server
             // For demo purposes, we'll just simulate a successful signup
-            alert('Account created successfully! Welcome, ' + fullname);
+            alert('Account created successfully! Welcome, ' + fullname + '. You signed up as a ' + accountType + '.');
             
             // Redirect to home page after successful signup
             setTimeout(() => {
