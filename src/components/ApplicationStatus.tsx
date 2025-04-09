@@ -1,7 +1,8 @@
 // src/components/ApplicationStatus.tsx
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui';
-import { Application, Internship } from '../types/types';
+import { Application, ApplicationStatus, Internship } from '../types';
+import { Button } from '@/components/ui';
+import { cn } from '@/lib/utils';
 
 interface ApplicationStatusProps {
     applications: Application[];
@@ -9,59 +10,41 @@ interface ApplicationStatusProps {
 }
 
 export const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applications, internships }) => {
-    const getInternshipTitle = (internshipId: string) => {
-        const internship = internships.find((i) => i.id === internshipId);
-        return internship ? internship.title : 'Unknown Internship';
+    const getStatusColor = (status: ApplicationStatus) => {
+        switch (status) {
+            case 'accepted':
+                return 'bg-green-100 text-green-800';
+            case 'rejected':
+                return 'bg-red-100 text-red-800';
+            default:
+                return 'bg-yellow-100 text-yellow-800';
+        }
     };
 
     return (
-        <div className="space-y-6">
-            <Card className="bg-white/5 backdrop-blur-md rounded-xl shadow-lg border border-white/10">
-                <CardHeader>
-                    <CardTitle className="text-2xl font-semibold text-white">
-                        Application Status
-                    </CardTitle>
-                    <CardDescription className="text-gray-400">
-                        View the status of your internship applications.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {applications.length === 0 ? (
-                        <p className="text-gray-400">You have no applications yet.</p>
-                    ) : (
-                        <div className="space-y-4">
-                            {applications.map((application) => (
-                                <Card key={application.id} className="bg-black/20 border-purple-500/30">
-                                    <CardHeader>
-                                        <CardTitle className="text-lg font-medium text-white">
-                                            Application for: {getInternshipTitle(application.internshipId)}
-                                        </CardTitle>
-                                        <CardDescription className="text-gray-400">
-                                            Applied on: {new Date(application.applyDate).toLocaleDateString()}
-                                        </CardDescription>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-gray-300">Status:</span>
-                                            <span
-                                                className={cn(
-                                                    'font-medium',
-                                                    application.status === 'pending' && 'text-yellow-400',
-                                                    application.status === 'reviewed' && 'text-blue-400',
-                                                    application.status === 'accepted' && 'text-green-400',
-                                                    application.status === 'rejected' && 'text-red-400',
-                                                )}
-                                            >
-                                                {application.status}
-                                            </span>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
+        <div className="space-y-4">
+            {applications.map((application) => {
+                const internship = internships.find(i => i.id === application.internshipId);
+                return (
+                    <div key={application.id} className="border rounded-lg p-4">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h3 className="font-semibold">{internship?.title}</h3>
+                                <p className="text-sm text-gray-600">{internship?.companyName}</p>
+                            </div>
+                            <span className={cn(
+                                "px-2 py-1 rounded-full text-xs font-medium",
+                                getStatusColor(application.status)
+                            )}>
+                                {application.status}
+                            </span>
                         </div>
-                    )}
-                </CardContent>
-            </Card>
+                        <div className="mt-2 text-sm text-gray-500">
+                            Applied on: {new Date(application.appliedAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     );
 };

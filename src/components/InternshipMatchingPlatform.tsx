@@ -1,16 +1,35 @@
-import React from 'react';
+import * as React from 'react';
+import { Internship, Student, Application } from '../types';
 import { HomePage } from './HomePage';
-import { SettingsPage } from './SettingsPage';
 import { ApplicationStatus } from './ApplicationStatus';
-import { InternshipManagement } from './InternshipManagement';
 
-export const InternshipMatchingPlatform: React.FC = () => {
+interface InternshipMatchingPlatformProps {
+    internships: Internship[];
+    students: Student[];
+    applications: Application[];
+    onApply: (internshipId: string) => void;
+}
+
+export const InternshipMatchingPlatform: React.FC<InternshipMatchingPlatformProps> = ({
+    internships,
+    students,
+    applications,
+    onApply,
+}) => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
-            <HomePage />
-            <SettingsPage />
-            <ApplicationStatus />
-            <InternshipManagement />
+        <div className="min-h-screen bg-gray-50">
+            <HomePage
+                internships={internships}
+                students={students}
+                onApply={onApply}
+            />
+            <div className="container mx-auto px-4 py-8">
+                <h2 className="text-2xl font-bold mb-6">Your Applications</h2>
+                <ApplicationStatus
+                    applications={applications}
+                    internships={internships}
+                />
+            </div>
         </div>
     );
 }; 
