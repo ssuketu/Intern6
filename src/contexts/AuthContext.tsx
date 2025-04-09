@@ -16,12 +16,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = async (email: string, password: string) => {
     // TODO: Implement actual authentication logic
     // For now, we'll just set a mock user
-    setUser({
+    const mockUser: User = {
       id: '1',
       email,
       name: 'Test User',
       role: 'student'
-    });
+    };
+    setUser(mockUser);
   };
 
   const logout = () => {
