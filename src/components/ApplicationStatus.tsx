@@ -11,7 +11,7 @@ interface ApplicationStatusProps {
     internships: Internship[];
 }
 
-export const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applications, internships }) => {
+const ApplicationStatusComponent: React.FC<ApplicationStatusProps> = ({ applications, internships }) => {
     const getStatusColor = (status: StatusType) => {
         switch (status) {
             case 'accepted':
@@ -50,3 +50,5 @@ export const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applicatio
         </div>
     );
 };
+
+export { ApplicationStatusComponent as ApplicationStatus };

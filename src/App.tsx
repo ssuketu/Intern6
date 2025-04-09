@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { Toaster } from 'sonner'
 import { InternshipMatchingPlatform } from './components/InternshipMatchingPlatform'
 import { Internship, Student, Application } from './types'
