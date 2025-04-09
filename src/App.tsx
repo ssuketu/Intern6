@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { Toaster } from 'sonner'
+import { Toaster, toast } from 'sonner'
 import { InternshipMatchingPlatform } from './components/InternshipMatchingPlatform'
 import { InternshipManagement } from './components/InternshipManagement'
 import { LoginModal } from './components/LoginModal'
@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false)
   const [userRole, setUserRole] = React.useState<'student' | 'employer' | null>(null)
   const [currentUser, setCurrentUser] = React.useState<Student | null>(null)
+  const [showLoginModal, setShowLoginModal] = React.useState(false)
   const [internships, setInternships] = React.useState<Internship[]>([
     {
       id: '1',
@@ -28,6 +29,7 @@ const App: React.FC = () => {
 
   const handleApply = (internshipId: string) => {
     if (!isAuthenticated || !currentUser) {
+      setShowLoginModal(true)
       return
     }
 
@@ -40,12 +42,14 @@ const App: React.FC = () => {
     }
 
     setApplications(prev => [...prev, newApplication])
+    toast.success('Application submitted successfully!')
   }
 
   const handleLogin = (email: string) => {
     const role = email.includes('@company.com') ? 'employer' : 'student'
     setIsAuthenticated(true)
     setUserRole(role)
+    setShowLoginModal(false)
 
     if (role === 'student') {
       setCurrentUser({
@@ -57,6 +61,9 @@ const App: React.FC = () => {
         education: 'Bachelor of Science',
         resume: 'resume.pdf'
       })
+      toast.success('Logged in as student')
+    } else {
+      toast.success('Logged in as employer')
     }
   }
 
@@ -64,6 +71,7 @@ const App: React.FC = () => {
     setIsAuthenticated(false)
     setUserRole(null)
     setCurrentUser(null)
+    toast.success('Logged out successfully')
   }
 
   const handleUpdateInternship = (id: string, updates: Partial<Internship>) => {
@@ -72,15 +80,46 @@ const App: React.FC = () => {
         internship.id === id ? { ...internship, ...updates } : internship
       )
     )
+    toast.success('Internship updated successfully')
   }
 
   const handleDeleteInternship = (id: string) => {
     setInternships(prev => prev.filter(internship => internship.id !== id))
+    toast.success('Internship deleted successfully')
   }
 
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
+        <nav className="bg-white shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex">
+                <div className="flex-shrink-0 flex items-center">
+                  <h1 className="text-xl font-bold text-gray-900">Internship Platform</h1>
+                </div>
+              </div>
+              <div className="flex items-center">
+                {isAuthenticated ? (
+                  <button
+                    onClick={handleLogout}
+                    className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setShowLoginModal(true)}
+                    className="ml-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </nav>
+
         <Routes>
           <Route path="/" element={
             <InternshipMatchingPlatform
@@ -104,6 +143,14 @@ const App: React.FC = () => {
             )
           } />
         </Routes>
+
+        {showLoginModal && (
+          <LoginModal
+            onClose={() => setShowLoginModal(false)}
+            onLogin={handleLogin}
+          />
+        )}
+
         <Toaster position="top-right" />
       </div>
     </Router>
