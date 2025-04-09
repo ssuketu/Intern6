@@ -1,5 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+interface Student {
+  id: string;
+  name: string;
+  email: string;
+  role: 'student' | 'employer';
+  userId: string;
+}
+
 interface User {
   id: string;
   email: string;
@@ -14,7 +22,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);

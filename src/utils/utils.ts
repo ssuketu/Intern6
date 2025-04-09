@@ -1,6 +1,35 @@
 // utils/utils.ts
 import { UserAccount, Student, Employer, Internship, Application, ApplicationStatus } from '../types';
 
+interface Student {
+  id: string;
+  name: string;
+  email: string;
+  role: 'student' | 'employer';
+  userId: string;
+  university: string;
+  major: string;
+  skills: string[];
+}
+
+interface Internship {
+  id: string;
+  title: string;
+  company: string;
+  description: string;
+  requirements: string[];
+  location: string;
+  duration: string;
+  stipend: number;
+  postedBy: string;
+  applications: string[];
+  deadline: string;
+  status: 'open' | 'closed';
+  salary: number;
+  employerId: string;
+  createdAt: Date;
+}
+
 export const getLoggedInUser = (): UserAccount | null => {
     const userJson = localStorage.getItem('user');
     return userJson ? JSON.parse(userJson) : null;
@@ -18,6 +47,14 @@ export const mockUserAccounts: UserAccount[] = [
 ];
 
 export const mockStudents: Student[] = [
+    {
+        id: '1',
+        name: 'John Doe',
+        email: 'john@example.com',
+        university: 'Example University',
+        major: 'Computer Science',
+        skills: ['JavaScript', 'React', 'TypeScript']
+    },
     {
         id: 's1',
         userId: 'u1',
@@ -41,16 +78,16 @@ export const mockEmployers: Employer[] = [
 
 export const mockInternships: Internship[] = [
     {
-        id: 'i1',
-        employerId: 'e1',
-        title: 'Software Engineering Intern',
-        description: 'Join our team to work on cutting-edge projects.',
-        requirements: ['Strong programming skills', 'Experience with React'],
-        location: 'San Francisco, CA',
+        id: '1',
+        title: 'Software Development Intern',
+        company: 'Tech Corp',
+        description: 'Join our team as a software development intern...',
+        requirements: ['JavaScript', 'React', 'TypeScript'],
+        location: 'Remote',
         duration: '3 months',
-        salary: '$25/hour',
-        deadline: '2024-04-30',
-        status: 'open'
+        stipend: 2000,
+        postedBy: '1',
+        createdAt: new Date()
     },
     {
         id: 'i2',

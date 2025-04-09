@@ -11,6 +11,10 @@ interface Internship {
   stipend: number;
   postedBy: string;
   applications: string[];
+  deadline: string;
+  status: 'open' | 'closed';
+  salary: number;
+  employerId: string;
 }
 
 interface InternshipContextType {
@@ -20,7 +24,7 @@ interface InternshipContextType {
   getInternshipById: (id: string) => Internship | undefined;
 }
 
-const InternshipContext = createContext<InternshipContextType | undefined>(undefined);
+export const InternshipContext = createContext<InternshipContextType | undefined>(undefined);
 
 export const InternshipProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [internships, setInternships] = useState<Internship[]>([]);

@@ -5,6 +5,8 @@ export interface Student {
     university: string;
     major: string;
     skills: string[];
+    role: 'student' | 'employer';
+    userId: string;
 }
 
 export interface Internship {
@@ -18,6 +20,11 @@ export interface Internship {
     stipend: number;
     postedBy: string;
     createdAt: Date;
+    applications: string[];
+    deadline: string;
+    status: 'open' | 'closed';
+    salary: number;
+    employerId: string;
 }
 
 export interface Application {
