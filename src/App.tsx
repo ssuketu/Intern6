@@ -11,11 +11,11 @@ const PrivateRoute: React.FC<{ children: React.ReactNode; roles?: string[] }> = 
   const { user, isAuthenticated } = useAuth()
   
   if (!isAuthenticated) {
-    return <Navigate to="/login" />
+    return <Navigate to="/login" replace />
   }
 
   if (roles && user && !roles.includes(user.role)) {
-    return <Navigate to="/" />
+    return <Navigate to="/" replace />
   }
 
   return <>{children}</>
@@ -65,7 +65,8 @@ const AppContent: React.FC = () => {
               </PrivateRoute>
             }
           />
-          <Route path="/login" element={<Navigate to="/" />} />
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <Toaster />
@@ -75,7 +76,7 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Router>
+    <Router basename="/">
       <AuthProvider>
         <InternshipProvider>
           <AppContent />

@@ -5,7 +5,12 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react({
-    jsxRuntime: 'classic'
+    jsxRuntime: 'classic',
+    babel: {
+      plugins: [
+        ['@babel/plugin-transform-react-jsx', { runtime: 'classic' }]
+      ]
+    }
   })],
   server: {
     port: 3000
@@ -32,7 +37,8 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
     esbuildOptions: {
-      target: 'es2020'
+      target: 'es2020',
+      jsx: 'automatic'
     }
   }
 }) 
