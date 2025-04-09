@@ -4,7 +4,9 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    jsxRuntime: 'classic'
+  })],
   server: {
     port: 3000
   },
@@ -28,6 +30,9 @@ export default defineConfig({
     assetsInlineLimit: 4096
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
+    include: ['react', 'react-dom', 'react-router-dom'],
+    esbuildOptions: {
+      target: 'es2020'
+    }
   }
 }) 
