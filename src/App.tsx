@@ -6,6 +6,7 @@ import { InternshipProvider, useInternship } from './contexts/InternshipContext'
 import { InternshipMatchingPlatform } from './components/InternshipMatchingPlatform'
 import InternshipManagement from "./components/InternshipManagement"
 import { LoginModal } from './components/LoginModal'
+import { Student } from './types'
 
 const PrivateRoute: React.FC<{ children: React.ReactNode; roles?: string[] }> = ({ children, roles }) => {
   const { user, isAuthenticated } = useAuth()
@@ -22,8 +23,27 @@ const PrivateRoute: React.FC<{ children: React.ReactNode; roles?: string[] }> = 
 }
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated, userRole } = useAuth()
-  const { internships } = useInternship()
+  const { isAuthenticated, userRole, user } = useAuth()
+  const { internships, applications, applyForInternship } = useInternship()
+
+  const handleApply = (internshipId: string) => {
+    if (!isAuthenticated || !user) {
+      return
+    }
+    applyForInternship(internshipId, 'Cover letter for application')
+  }
+
+  const getStudentFromUser = (user: any): Student => {
+    return {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      university: 'Unknown University',
+      major: 'Unknown Major',
+      skills: [],
+      userId: user.id
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -56,7 +76,19 @@ const AppContent: React.FC = () => {
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <Routes>
-          <Route path="/" element={<InternshipMatchingPlatform />} />
+          <Route 
+            path="/" 
+            element={
+              <InternshipMatchingPlatform 
+                internships={internships}
+                students={user ? [getStudentFromUser(user)] : []}
+                applications={applications}
+                onApply={handleApply}
+                isAuthenticated={isAuthenticated}
+                onLogin={() => {/* TODO: Implement login */}}
+              />
+            } 
+          />
           <Route
             path="/manage"
             element={
