@@ -115,4 +115,32 @@ export const SettingsPage = () => {
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-gray-300">Major:</span>
-                                <span className="text-white font-medium">{profile
+                                <span className="text-white font-medium">{profile.major}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-300">Skills:</span>
+                                <span className="text-white font-medium">{profile.skills}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-300">Education:</span>
+                                <span className="text-white font-medium">{profile.education}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-300">Resume:</span>
+                                <span className="text-white font-medium">{profile.resume}</span>
+                            </div>
+                            <div className="flex justify-end mt-4">
+                                <Button
+                                    onClick={handleEdit}
+                                    className="bg-purple-500/90 text-white hover:bg-purple-500 transition-colors"
+                                >
+                                    Edit Profile
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+        </div>
+    );
+};
