@@ -19,7 +19,12 @@ export const InternshipProvider: React.FC<{ children: ReactNode }> = ({ children
     const newInternship: Internship = {
       ...internship,
       id: Date.now().toString(),
-      createdAt: new Date()
+      createdAt: new Date(),
+      applications: [],
+      deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+      status: 'open',
+      salary: Number(internship.salary) || 0,
+      employerId: internship.postedBy
     };
     setInternships(prev => [...prev, newInternship]);
   };
