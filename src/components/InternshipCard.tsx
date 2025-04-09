@@ -1,8 +1,8 @@
 // components/InternshipCard.tsx
 import * as React from 'react';
 import { Internship } from '../types';
-import { Button } from '@/components/ui';
-import { cn } from '@/lib/utils';
+import { Button } from './ui';
+import { cn } from '../lib/utils';
 
 interface InternshipCardProps {
     internship: Internship;
@@ -10,19 +10,22 @@ interface InternshipCardProps {
 }
 
 export const InternshipCard: React.FC<InternshipCardProps> = ({ internship, onApply }) => {
+    const deadline = new Date(internship.deadline);
+    const isExpired = deadline < new Date();
+
     return (
-        <div className="border rounded-lg p-4 space-y-4">
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4 hover:shadow-md transition-shadow">
             <div>
-                <h3 className="font-semibold text-lg">{internship.title}</h3>
+                <h3 className="font-semibold text-lg text-gray-900">{internship.title}</h3>
                 <p className="text-sm text-gray-600">{internship.location}</p>
             </div>
             
             <p className="text-gray-700">{internship.description}</p>
             
             <div>
-                <h4 className="font-medium mb-2">Requirements:</h4>
+                <h4 className="font-medium text-gray-900 mb-2">Requirements:</h4>
                 <ul className="list-disc list-inside space-y-1">
-                    {internship.requirements.map((requirement: string, index: number) => (
+                    {internship.requirements.map((requirement, index) => (
                         <li key={index} className="text-sm text-gray-600">{requirement}</li>
                     ))}
                 </ul>
@@ -33,19 +36,26 @@ export const InternshipCard: React.FC<InternshipCardProps> = ({ internship, onAp
                 <span className="text-gray-600">Salary: {internship.salary}</span>
             </div>
             
-            <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-500">
-                    Deadline: {new Date(internship.deadline).toLocaleDateString()}
-                </span>
+            <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                <div className="text-sm">
+                    <span className={cn(
+                        "px-2 py-1 rounded-full text-xs font-medium",
+                        isExpired ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
+                    )}>
+                        {isExpired ? "Expired" : "Open until " + deadline.toLocaleDateString()}
+                    </span>
+                </div>
                 <Button
                     onClick={() => onApply(internship.id)}
                     className={cn(
                         "px-4 py-2 rounded-md",
-                        internship.status === 'closed' ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 text-white'
+                        internship.status === 'closed' || isExpired
+                            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                            : "bg-indigo-600 hover:bg-indigo-700 text-white"
                     )}
-                    disabled={internship.status === 'closed'}
+                    disabled={internship.status === 'closed' || isExpired}
                 >
-                    {internship.status === 'closed' ? 'Closed' : 'Apply Now'}
+                    {internship.status === 'closed' || isExpired ? 'Closed' : 'Apply Now'}
                 </Button>
             </div>
         </div>
