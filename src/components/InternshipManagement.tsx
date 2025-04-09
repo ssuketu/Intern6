@@ -6,8 +6,16 @@ import { toast } from 'sonner';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, Button, Input, Textarea } from './ui';
 
 const InternshipManagement: React.FC = () => {
-    const { internships, applications, addInternship, updateApplicationStatus } = useContext(InternshipContext);
-    const { user } = useContext(AuthContext);
+    const internshipContext = useContext(InternshipContext);
+    const authContext = useContext(AuthContext);
+
+    if (!internshipContext || !authContext) {
+        return <div>Loading...</div>;
+    }
+
+    const { internships, applications, addInternship, updateApplicationStatus } = internshipContext;
+    const { user } = authContext;
+
     const [newInternship, setNewInternship] = useState<Omit<Internship, 'id' | 'createdAt' | 'postedBy'>>({
         title: '',
         company: '',
@@ -16,6 +24,11 @@ const InternshipManagement: React.FC = () => {
         location: '',
         duration: '',
         stipend: 0,
+        applications: [],
+        deadline: '',
+        status: 'open',
+        salary: 0,
+        employerId: user?.id || ''
     });
 
     const handleAddInternship = async (e: React.FormEvent) => {
@@ -33,6 +46,11 @@ const InternshipManagement: React.FC = () => {
                 location: '',
                 duration: '',
                 stipend: 0,
+                applications: [],
+                deadline: '',
+                status: 'open',
+                salary: 0,
+                employerId: user?.id || ''
             });
             toast.success('Internship posted successfully!');
         } catch (error) {
@@ -139,7 +157,7 @@ const InternshipManagement: React.FC = () => {
             <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-semibold mb-4">Applications</h2>
                 <div className="space-y-4">
-                    {applications.map((application) => {
+                    {applications.map((application: Application) => {
                         const internship = internships.find(i => i.id === application.internshipId);
                         return (
                             <div key={application.id} className="border rounded-lg p-4">

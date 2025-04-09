@@ -53,7 +53,9 @@ export const mockStudents: Student[] = [
         email: 'john@example.com',
         university: 'Example University',
         major: 'Computer Science',
-        skills: ['JavaScript', 'React', 'TypeScript']
+        skills: ['JavaScript', 'React', 'TypeScript'],
+        role: 'student',
+        userId: '1'
     },
     {
         id: 's1',
@@ -87,7 +89,12 @@ export const mockInternships: Internship[] = [
         duration: '3 months',
         stipend: 2000,
         postedBy: '1',
-        createdAt: new Date()
+        createdAt: new Date(),
+        applications: [],
+        deadline: '2024-12-31',
+        status: 'open',
+        salary: 2000,
+        employerId: '1'
     },
     {
         id: 'i2',
@@ -109,7 +116,8 @@ export const mockApplications: Application[] = [
         studentId: 's1', 
         internshipId: 'i1', 
         status: 'pending', 
-        appliedAt: '2024-02-05' 
+        appliedAt: new Date(),
+        coverLetter: 'I am interested in this position...'
     },
     { 
         id: 'a2', 

@@ -1,59 +1,51 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface Internship {
-  id: string;
-  title: string;
-  company: string;
-  description: string;
-  requirements: string[];
-  location: string;
-  duration: string;
-  stipend: number;
-  postedBy: string;
-  applications: string[];
-  deadline: string;
-  status: 'open' | 'closed';
-  salary: number;
-  employerId: string;
-}
+import { Internship, Application } from '../types';
 
 interface InternshipContextType {
   internships: Internship[];
-  addInternship: (internship: Omit<Internship, 'id' | 'applications'>) => void;
-  applyForInternship: (internshipId: string, studentId: string) => void;
-  getInternshipById: (id: string) => Internship | undefined;
+  applications: Application[];
+  addInternship: (internship: Omit<Internship, 'id' | 'createdAt'>) => Promise<void>;
+  applyForInternship: (internshipId: string, coverLetter: string) => Promise<void>;
+  updateApplicationStatus: (applicationId: string, status: 'accepted' | 'rejected') => Promise<void>;
 }
 
 export const InternshipContext = createContext<InternshipContextType | undefined>(undefined);
 
 export const InternshipProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [internships, setInternships] = useState<Internship[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
 
-  const addInternship = (internship: Omit<Internship, 'id' | 'applications'>) => {
+  const addInternship = async (internship: Omit<Internship, 'id' | 'createdAt'>) => {
     const newInternship: Internship = {
       ...internship,
       id: Date.now().toString(),
-      applications: []
+      createdAt: new Date()
     };
     setInternships(prev => [...prev, newInternship]);
   };
 
-  const applyForInternship = (internshipId: string, studentId: string) => {
-    setInternships(prev => 
-      prev.map(internship => 
-        internship.id === internshipId
-          ? { ...internship, applications: [...internship.applications, studentId] }
-          : internship
+  const applyForInternship = async (internshipId: string, coverLetter: string) => {
+    const newApplication: Application = {
+      id: Date.now().toString(),
+      internshipId,
+      studentId: 'current-user-id', // This should be replaced with actual user ID
+      status: 'pending',
+      appliedAt: new Date(),
+      coverLetter
+    };
+    setApplications(prev => [...prev, newApplication]);
+  };
+
+  const updateApplicationStatus = async (applicationId: string, status: 'accepted' | 'rejected') => {
+    setApplications(prev =>
+      prev.map(app =>
+        app.id === applicationId ? { ...app, status } : app
       )
     );
   };
 
-  const getInternshipById = (id: string) => {
-    return internships.find(internship => internship.id === id);
-  };
-
   return (
-    <InternshipContext.Provider value={{ internships, addInternship, applyForInternship, getInternshipById }}>
+    <InternshipContext.Provider value={{ internships, applications, addInternship, applyForInternship, updateApplicationStatus }}>
       {children}
     </InternshipContext.Provider>
   );

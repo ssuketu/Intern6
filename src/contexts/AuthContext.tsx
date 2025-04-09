@@ -1,19 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface Student {
-  id: string;
-  name: string;
-  email: string;
-  role: 'student' | 'employer';
-  userId: string;
-}
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: 'student' | 'company';
-}
+import { User } from '../types';
 
 interface AuthContextType {
   user: User | null;

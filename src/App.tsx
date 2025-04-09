@@ -4,7 +4,7 @@ import { Toaster } from 'sonner'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { InternshipProvider, useInternship } from './context/InternshipContext'
 import { InternshipMatchingPlatform } from './components/InternshipMatchingPlatform'
-import { InternshipManagement } from './components/InternshipManagement'
+import InternshipManagement from "./components/InternshipManagement"
 import { LoginModal } from './components/LoginModal'
 
 const AppContent: React.FC = () => {
