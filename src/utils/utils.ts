@@ -1,35 +1,6 @@
 // utils/utils.ts
 import { UserAccount, Student, Employer, Internship, Application, ApplicationStatus } from '../types';
 
-interface Student {
-  id: string;
-  name: string;
-  email: string;
-  role: 'student' | 'employer';
-  userId: string;
-  university: string;
-  major: string;
-  skills: string[];
-}
-
-interface Internship {
-  id: string;
-  title: string;
-  company: string;
-  description: string;
-  requirements: string[];
-  location: string;
-  duration: string;
-  stipend: number;
-  postedBy: string;
-  applications: string[];
-  deadline: string;
-  status: 'open' | 'closed';
-  salary: number;
-  employerId: string;
-  createdAt: Date;
-}
-
 export const getLoggedInUser = (): UserAccount | null => {
     const userJson = localStorage.getItem('user');
     return userJson ? JSON.parse(userJson) : null;
@@ -61,11 +32,12 @@ export const mockStudents: Student[] = [
         id: 's1',
         userId: 'u1',
         name: 'Alice Smith',
+        email: 'alice@example.com',
+        university: 'Tech University',
         major: 'Computer Science',
         skills: ['React', 'Node.js', 'Python', 'JavaScript'],
-        education: 'BS in Computer Science',
-        resume: 'https://example.com/alice-resume.pdf'
-    },
+        role: 'student'
+    }
 ];
 
 export const mockEmployers: Employer[] = [
@@ -75,7 +47,7 @@ export const mockEmployers: Employer[] = [
         companyName: 'Tech Innovators Inc',
         description: 'A leading technology company',
         website: 'https://techinnovators.com'
-    },
+    }
 ];
 
 export const mockInternships: Internship[] = [
@@ -104,10 +76,15 @@ export const mockInternships: Internship[] = [
         requirements: ['Python', 'SQL', 'Data Analysis'],
         location: 'New York, NY',
         duration: '6 months',
-        salary: '$30/hour',
+        stipend: 3000,
+        postedBy: 'e1',
+        createdAt: new Date(),
+        applications: [],
         deadline: '2024-05-15',
-        status: 'open'
-    },
+        status: 'open',
+        salary: 3000,
+        company: 'Tech Innovators Inc'
+    }
 ];
 
 export const mockApplications: Application[] = [
@@ -118,14 +95,7 @@ export const mockApplications: Application[] = [
         status: 'pending', 
         appliedAt: new Date(),
         coverLetter: 'I am interested in this position...'
-    },
-    { 
-        id: 'a2', 
-        studentId: 's1', 
-        internshipId: 'i2', 
-        status: 'pending', 
-        appliedAt: '2024-02-10' 
-    },
+    }
 ];
 
 export const createUserAccount = (email: string, role: 'student' | 'employer'): UserAccount => {
@@ -136,15 +106,16 @@ export const createUserAccount = (email: string, role: 'student' | 'employer'): 
     };
 };
 
-export const createStudent = (userId: string, name: string, major: string, skills: string[], education: string, resume: string): Student => {
+export const createStudent = (userId: string, name: string, email: string, university: string, major: string, skills: string[]): Student => {
     return {
         id: crypto.randomUUID(),
         userId,
         name,
+        email,
+        university,
         major,
         skills,
-        education,
-        resume
+        role: 'student'
     };
 };
 
@@ -165,8 +136,8 @@ export const createInternship = (
     requirements: string[],
     location: string,
     duration: string,
-    salary: string,
-    deadline: string
+    stipend: number,
+    salary: number
 ): Internship => {
     return {
         id: crypto.randomUUID(),
@@ -176,19 +147,25 @@ export const createInternship = (
         requirements,
         location,
         duration,
+        stipend,
         salary,
-        deadline,
-        status: 'open'
+        postedBy: employerId,
+        createdAt: new Date(),
+        applications: [],
+        deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        status: 'open',
+        company: 'Company Name'
     };
 };
 
-export const createApplication = (studentId: string, internshipId: string): Application => {
+export const createApplication = (studentId: string, internshipId: string, coverLetter: string): Application => {
     return {
         id: crypto.randomUUID(),
         studentId,
         internshipId,
         status: 'pending',
-        appliedAt: new Date().toISOString()
+        appliedAt: new Date(),
+        coverLetter
     };
 };
 
