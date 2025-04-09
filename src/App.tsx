@@ -1,6 +1,6 @@
 import React from 'react'
 import { Toaster } from 'sonner'
-import InternshipMatchingPlatform from './components/InternshipMatchingPlatform'
+import { InternshipMatchingPlatform } from './components/InternshipMatchingPlatform'
 
 function App() {
   return (

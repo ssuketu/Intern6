@@ -1,56 +1,49 @@
 // types/types.ts
-export enum ApplicationStatus {
-    PENDING = 'pending',
-    REVIEWED = 'reviewed',
-    ACCEPTED = 'accepted',
-    REJECTED = 'rejected',
-}
-
-export interface UserAccount {
+export type UserAccount = {
     id: string;
     email: string;
-    role: 'student' | 'employer' | 'admin';
-    verified: boolean;
-}
+    role: 'student' | 'employer';
+};
 
-export interface Student {
+export type Student = {
     id: string;
+    userId: string;
     name: string;
-    email: string;
+    major: string;
     skills: string[];
-    experience: string[];
     education: string;
-    readinessScore: number;
-}
+    resume: string;
+};
 
-export interface Employer {
+export type Employer = {
     id: string;
+    userId: string;
     companyName: string;
-    email: string;
     industry: string;
     website: string;
-    contactPerson: string;
-}
-
-export interface Internship {
-    id: string;
-    title: string;
-    company: string;
     location: string;
+    contactPerson: string;
+};
+
+export type Internship = {
+    id: string;
+    employerId: string;
+    title: string;
     description: string;
     requirements: string[];
+    location: string;
     duration: string;
     salary: string;
-    postedDate: string;
-    skills: string[];
+    deadline: string;
     status: 'open' | 'closed';
-    major?: string;
-}
+};
 
-export interface Application {
+export type ApplicationStatus = 'pending' | 'accepted' | 'rejected';
+
+export type Application = {
     id: string;
     studentId: string;
     internshipId: string;
     status: ApplicationStatus;
-    applyDate: string;
-}
+    appliedAt: string;
+};
