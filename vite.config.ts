@@ -13,7 +13,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base: './',
+  base: '/',
   build: {
     outDir: 'dist',
     sourcemap: false,
@@ -24,6 +24,10 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom']
         }
       }
-    }
+    },
+    assetsInlineLimit: 4096
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom']
   }
 }) 
