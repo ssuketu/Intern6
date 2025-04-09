@@ -57,7 +57,9 @@ const App: React.FC = () => {
     console.log('Applying for internship:', internshipId)
   }
 
-  const handleLogin = (role: 'student' | 'employer') => {
+  const handleLogin = (email: string) => {
+    // In a real app, you would validate the email and determine the role
+    const role = email.includes('@company.com') ? 'employer' : 'student'
     setIsAuthenticated(true)
     setUserRole(role)
   }
@@ -78,15 +80,15 @@ const App: React.FC = () => {
               applications={mockApplications}
               onApply={handleApply}
               isAuthenticated={isAuthenticated}
-              onLogin={() => handleLogin('student')}
+              onLogin={handleLogin}
             />
           } />
           <Route path="/manage" element={
             isAuthenticated && userRole === 'employer' ? (
               <InternshipManagement
                 internships={mockInternships}
-                onUpdate={(id, updates) => console.log('Update internship:', id, updates)}
-                onDelete={(id) => console.log('Delete internship:', id)}
+                onUpdate={(id: string, updates: Partial<Internship>) => console.log('Update internship:', id, updates)}
+                onDelete={(id: string) => console.log('Delete internship:', id)}
               />
             ) : (
               <Navigate to="/" replace />
