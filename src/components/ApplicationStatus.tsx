@@ -1,8 +1,10 @@
 // src/components/ApplicationStatus.tsx
-import React from 'react';
-import { Application, ApplicationStatus, Internship } from '../types';
+import * as React from 'react';
+import type { Application, Internship } from '../types';
 import { Button } from '@/components/ui';
 import { cn } from '@/lib/utils';
+
+type StatusType = 'pending' | 'accepted' | 'rejected';
 
 interface ApplicationStatusProps {
     applications: Application[];
@@ -10,7 +12,7 @@ interface ApplicationStatusProps {
 }
 
 export const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applications, internships }) => {
-    const getStatusColor = (status: ApplicationStatus) => {
+    const getStatusColor = (status: StatusType) => {
         switch (status) {
             case 'accepted':
                 return 'bg-green-100 text-green-800';
@@ -30,11 +32,11 @@ export const ApplicationStatus: React.FC<ApplicationStatusProps> = ({ applicatio
                         <div className="flex justify-between items-center">
                             <div>
                                 <h3 className="font-semibold">{internship?.title}</h3>
-                                <p className="text-sm text-gray-600">{internship?.companyName}</p>
+                                <p className="text-sm text-gray-600">{internship?.location}</p>
                             </div>
                             <span className={cn(
                                 "px-2 py-1 rounded-full text-xs font-medium",
-                                getStatusColor(application.status)
+                                getStatusColor(application.status as StatusType)
                             )}>
                                 {application.status}
                             </span>
