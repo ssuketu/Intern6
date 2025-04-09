@@ -23,8 +23,8 @@ export const InternshipProvider: React.FC<{ children: ReactNode }> = ({ children
       applications: [],
       deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       status: 'open',
-      salary: Number(internship.salary),
-      stipend: Number(internship.stipend),
+      salary: typeof internship.salary === 'string' ? parseFloat(internship.salary) : internship.salary,
+      stipend: typeof internship.stipend === 'string' ? parseFloat(internship.stipend) : internship.stipend,
       employerId: internship.postedBy
     };
     setInternships(prev => [...prev, newInternship]);
