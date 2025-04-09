@@ -41,54 +41,15 @@
                 <h1>Find Your Perfect Internship</h1>
                 <p>Connect with top companies and kickstart your career with meaningful internship opportunities.</p>
                 <div class="search-box">
-                    <input type="text" placeholder="Search for internships...">
-                    <button class="btn btn-primary">Search</button>
+                    <input type="text" placeholder="Search for internships, companies, or keywords...">
+                    <button><i class="fas fa-search"></i></button>
                 </div>
                 <div class="popular-searches">
                     <span>Popular:</span>
-                    <a href="#">Software Development</a>
-                    <a href="#">Marketing</a>
-                    <a href="#">Design</a>
-                    <a href="#">Finance</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="images/hero-image.svg" alt="Internship illustration">
-            </div>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Why Choose EmployeIntern?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <h3>Find Opportunities</h3>
-                    <p>Browse thousands of internships from top companies across various industries.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>Build Your Profile</h3>
-                    <p>Create a standout profile that showcases your skills and experience to employers.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-handshake"></i>
-                    </div>
-                    <h3>Connect Directly</h3>
-                    <p>Apply directly to companies and receive feedback on your applications.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Grow Your Career</h3>
-                    <p>Access resources and mentorship to help you succeed in your internship.</p>
+                    <a href="internships.html?q=software">Software</a>
+                    <a href="internships.html?q=marketing">Marketing</a>
+                    <a href="internships.html?q=design">Design</a>
+                    <a href="internships.html?q=finance">Finance</a>
                 </div>
             </div>
         </div>
@@ -96,50 +57,187 @@
 
     <section class="categories">
         <div class="container">
-            <h2 class="section-title">Popular Categories</h2>
-            <div class="categories-grid">
-                <a href="#" class="category-card">
+            <div class="section-header">
+                <h2>Browse by Category</h2>
+                <p>Explore internships in your field of interest</p>
+            </div>
+            <div class="category-grid">
+                <a href="internships.html?category=technology" class="category-card">
                     <div class="category-icon">
                         <i class="fas fa-laptop-code"></i>
                     </div>
                     <h3>Technology</h3>
-                    <p>1,200+ opportunities</p>
+                    <p>Software, IT, Data Science</p>
                 </a>
-                <a href="#" class="category-card">
+                <a href="internships.html?category=business" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-chart-pie"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Business</h3>
-                    <p>850+ opportunities</p>
+                    <p>Finance, Marketing, Sales</p>
                 </a>
-                <a href="#" class="category-card">
+                <a href="internships.html?category=creative" class="category-card">
                     <div class="category-icon">
                         <i class="fas fa-paint-brush"></i>
                     </div>
-                    <h3>Design</h3>
-                    <p>620+ opportunities</p>
+                    <h3>Creative</h3>
+                    <p>Design, Media, Writing</p>
                 </a>
-                <a href="#" class="category-card">
+                <a href="internships.html?category=engineering" class="category-card">
                     <div class="category-icon">
-                        <i class="fas fa-flask"></i>
+                        <i class="fas fa-cogs"></i>
                     </div>
-                    <h3>Science</h3>
-                    <p>450+ opportunities</p>
+                    <h3>Engineering</h3>
+                    <p>Mechanical, Civil, Electrical</p>
                 </a>
-                <a href="#" class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h3>Marketing</h3>
-                    <p>780+ opportunities</p>
-                </a>
-                <a href="#" class="category-card">
+                <a href="internships.html?category=healthcare" class="category-card">
                     <div class="category-icon">
                         <i class="fas fa-heartbeat"></i>
                     </div>
                     <h3>Healthcare</h3>
-                    <p>520+ opportunities</p>
+                    <p>Medical, Research, Biotech</p>
                 </a>
+                <a href="internships.html?category=science" class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Science</h3>
+                    <p>Research, Lab Work, Analysis</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Internships</h2>
+                <p>Handpicked opportunities from top companies</p>
+            </div>
+            <div class="featured-grid">
+                <div class="internship-card">
+                    <div class="internship-header">
+                        <div class="company-logo">
+                            <img src="https://via.placeholder.com/60" alt="Company Logo">
+                        </div>
+                        <div>
+                            <h3 class="internship-title">Software Engineering Intern</h3>
+                            <p class="company-name">TechCorp Inc.</p>
+                        </div>
+                    </div>
+                    <div class="internship-details">
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>San Francisco, CA (Remote)</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Full-time</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>$25-30/hr</span>
+                            </div>
+                        </div>
+                        <p>Join our engineering team to develop cutting-edge web applications using modern technologies.</p>
+                    </div>
+                    <div class="internship-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                    </div>
+                    <div class="internship-actions">
+                        <button class="save-btn">
+                            <i class="far fa-bookmark"></i>
+                            <span>Save</span>
+                        </button>
+                        <a href="internship-detail.html?id=1" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-header">
+                        <div class="company-logo">
+                            <img src="https://via.placeholder.com/60" alt="Company Logo">
+                        </div>
+                        <div>
+                            <h3 class="internship-title">Marketing Intern</h3>
+                            <p class="company-name">BrandBoost Agency</p>
+                        </div>
+                    </div>
+                    <div class="internship-details">
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>New York, NY</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Part-time</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>$20/hr</span>
+                            </div>
+                        </div>
+                        <p>Assist in developing and implementing marketing strategies for our clients.</p>
+                    </div>
+                    <div class="internship-tags">
+                        <span class="tag">Social Media</span>
+                        <span class="tag">Content Marketing</span>
+                        <span class="tag">SEO</span>
+                    </div>
+                    <div class="internship-actions">
+                        <button class="save-btn">
+                            <i class="far fa-bookmark"></i>
+                            <span>Save</span>
+                        </button>
+                        <a href="internship-detail.html?id=2" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+                <div class="internship-card">
+                    <div class="internship-header">
+                        <div class="company-logo">
+                            <img src="https://via.placeholder.com/60" alt="Company Logo">
+                        </div>
+                        <div>
+                            <h3 class="internship-title">UX/UI Design Intern</h3>
+                            <p class="company-name">DesignHub Co.</p>
+                        </div>
+                    </div>
+                    <div class="internship-details">
+                        <div class="internship-meta">
+                            <div class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Chicago, IL (Hybrid)</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Full-time</span>
+                            </div>
+                            <div class="meta-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>$22/hr</span>
+                            </div>
+                        </div>
+                        <p>Create user-centered designs for web and mobile applications in a collaborative environment.</p>
+                    </div>
+                    <div class="internship-tags">
+                        <span class="tag">Figma</span>
+                        <span class="tag">UI Design</span>
+                        <span class="tag">Prototyping</span>
+                    </div>
+                    <div class="internship-actions">
+                        <button class="save-btn">
+                            <i class="far fa-bookmark"></i>
+                            <span>Save</span>
+                        </button>
+                        <a href="internship-detail.html?id=3" class="btn btn-primary">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="internships.html" class="btn btn-outline">View All Internships</a>
             </div>
         </div>
     </section>
@@ -148,34 +246,59 @@
         <div class="container">
             <div class="cta-content">
                 <h2>Are You an Employer?</h2>
-                <p>Post internship opportunities and find talented students and graduates for your organization.</p>
-                <a href="#" class="btn btn-primary">Post an Internship</a>
+                <p>Post internship opportunities and find talented students for your organization.</p>
+                <a href="for-employers.html" class="btn btn-primary">Post an Internship</a>
             </div>
         </div>
     </section>
 
     <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">Success Stories</h2>
-            <div class="testimonials-slider">
+            <div class="section-header">
+                <h2>Success Stories</h2>
+                <p>Hear from students who found their dream internships</p>
+            </div>
+            <div class="testimonial-grid">
                 <div class="testimonial-card">
-                    <div class="testimonial-image">
-                        <img src="images/testimonial-1.jpg" alt="Student testimonial">
-                    </div>
                     <div class="testimonial-content">
-                        <p>"EmployeIntern helped me land my dream internship at a tech startup. The experience was invaluable and led to a full-time job offer!"</p>
-                        <h4>Sarah Johnson</h4>
-                        <p class="testimonial-position">Software Engineering Intern</p>
+                        <p>"EmployeIntern helped me land my dream internship at a top tech company. The platform was easy to use and had so many great opportunities!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://via.placeholder.com/60" alt="Student Photo">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Software Engineering Intern at TechCorp</p>
+                        </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <div class="testimonial-image">
-                        <img src="images/testimonial-2.jpg" alt="Employer testimonial">
-                    </div>
                     <div class="testimonial-content">
-                        <p>"As an employer, I've found exceptional talent through EmployeIntern. The platform makes it easy to connect with motivated students."</p>
-                        <h4>Michael Chen</h4>
-                        <p class="testimonial-position">HR Director, TechCorp</p>
+                        <p>"I was struggling to find relevant internships in my field until I discovered EmployeIntern. Within two weeks, I had multiple interviews lined up!"</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://via.placeholder.com/60" alt="Student Photo">
+                        </div>
+                        <div class="author-info">
+                            <h4>Michael Chen</h4>
+                            <p>Marketing Intern at BrandBoost</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"The resources and guidance provided by EmployeIntern were invaluable. They helped me prepare for interviews and stand out from other candidates."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://via.placeholder.com/60" alt="Student Photo">
+                        </div>
+                        <div class="author-info">
+                            <h4>Olivia Martinez</h4>
+                            <p>Design Intern at CreativeStudio</p>
+                        </div>
                     </div>
                 </div>
             </div>
